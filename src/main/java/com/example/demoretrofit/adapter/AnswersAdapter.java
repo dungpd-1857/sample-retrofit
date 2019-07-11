@@ -3,81 +3,58 @@ package com.example.demoretrofit.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import com.example.demoretrofit.data.model.Item;
 import java.util.List;
 
-public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHolder> {
+public class AnswersAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-    private List<Item> mItems;
-    private Context mContext;
+    private List<Item> mListItems;
     private PostItemListener mItemListener;
+    private LayoutInflater inflater;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
-        public TextView titleTv;
-
-        PostItemListener mItemListener;
-
-        public ViewHolder(View itemView, PostItemListener postItemListener) {
-            super(itemView);
-            titleTv = (TextView) itemView.findViewById(android.R.id.text1);
-
-            this.mItemListener = postItemListener;
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            Item item = getItem(getAdapterPosition());
-            this.mItemListener.onPostClick(item.getAnswerId());
-        }
+    public AnswersAdapter(Context context, List<Item> item) {
+        this.inflater = LayoutInflater.from(context);
+        this.mListItems = item;
     }
 
-    public AnswersAdapter(Context context, List<Item> posts, PostItemListener itemListener) {
-        mItems = posts;
-        mContext = context;
-        mItemListener = itemListener;
+    public AnswersAdapter() {
+
+    }
+
+    public void setListener(PostItemListener mListener) {
+        this.mItemListener = mListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View postView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-
-        ViewHolder viewHolder = new ViewHolder(postView, this.mItemListener);
-        return viewHolder;
+        return ViewHolder.create(inflater, parent);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-        Item item = mItems.get(position);
-        TextView textView = holder.titleTv;
-        textView.setText(item.getOwner().getDisplayName());
+        Item mItem = mListItems.get(position);
+        holder.bind(mItem);
+        if (mItemListener != null) {
+            holder.setListener(mItemListener);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return mListItems == null ? 0 : mListItems.size();
     }
 
     public void updateAnswers(List<Item> items) {
-        mItems = items;
+        mListItems = items;
         notifyDataSetChanged();
     }
 
     private Item getItem(int adapterPosition) {
-        return mItems.get(adapterPosition);
+        return mListItems.get(adapterPosition);
     }
 
     public interface PostItemListener {
-        void onPostClick(long id);
+        void onPostClick(Item id);
     }
-
 }
