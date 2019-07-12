@@ -18,10 +18,6 @@ public class AnswersAdapter extends RecyclerView.Adapter<ViewHolder> {
         this.mListItems = item;
     }
 
-    public AnswersAdapter() {
-
-    }
-
     public void setListener(PostItemListener mListener) {
         this.mItemListener = mListener;
     }
@@ -43,15 +39,6 @@ public class AnswersAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public int getItemCount() {
         return mListItems == null ? 0 : mListItems.size();
-    }
-
-    public void updateAnswers(List<Item> items) {
-        mListItems = items;
-        notifyDataSetChanged();
-    }
-
-    private Item getItem(int adapterPosition) {
-        return mListItems.get(adapterPosition);
     }
 
     public interface PostItemListener {
