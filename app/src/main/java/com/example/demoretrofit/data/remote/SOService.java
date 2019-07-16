@@ -1,9 +1,8 @@
 package com.example.demoretrofit.data.remote;
 
 
-import com.example.demoretrofit.data.model.SOAnswersResponse;
-import io.reactivex.Observable;
-import java.util.List;
+import com.example.demoretrofit.data.model.AnswersResponse;
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.GET;
@@ -11,14 +10,14 @@ import retrofit2.http.Query;
 
 public interface SOService {
 
-    @GET("/answers?order=desc&sort=activity&site=stackoverflow")
-    Call<SOAnswersResponse> getAnswers();
+//    @GET("/answers?order=desc&sort=activity&site=stackoverflow")
+//    Call<AnswersResponse> getAnswers();
 
 //    RxJava
-//    @GET("/answers?order=desc&sort=activity&site=stackoverflow")
-//    Observable<Response<SOAnswersResponse>> getAnswers();
+    @GET("/answers?order=desc&sort=activity&site=stackoverflow")
+    Single<Response<AnswersResponse>> getAnswers();
 
 //    @GET("/answers?order=desc&sort=activity&site=stackoverflow")
-//    Call<SOAnswersResponse> getAnswers(@Query("tagged") String tags);
+//    Single<Response<AnswersResponse>> getAnswers(@Query("tagged") String tags);
 
 }

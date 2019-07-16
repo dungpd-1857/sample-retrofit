@@ -28,9 +28,4 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     public void bind(Item t) {
         mItemBinding.setData(t);
     }
-    //        @Override
-    //        public void onClick(View view) {
-    //            Item item = getItem(getAdapterPosition());
-    //            this.mItemListener.onPostClick(item.getAnswerId());
-    //        }
 }
